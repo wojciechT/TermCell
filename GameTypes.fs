@@ -66,3 +66,7 @@ module GameTypes =
             GoalColumns : Map<int, GoalColumn>
             WorkingColumns : Map<int, WorkingColumn>
         }
+    with static member Empty() = { 
+            FreeCells = Map [1, {PlacedCard = None}; 2, {PlacedCard = None}; 3, {PlacedCard = None}; 4, {PlacedCard = None}]; 
+            GoalColumns = Map [1, {GoalCards = []}; 2, {GoalCards = []}; 3, {GoalCards = []}; 4, {GoalCards = []}];
+            WorkingColumns =  Seq.init 8 (fun i -> i + 1,  {WorkingCards = []}) |> Map }

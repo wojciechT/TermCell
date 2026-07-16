@@ -1,15 +1,11 @@
 ﻿namespace TermCell
 
 open Render
+open GameFunctions
 
 module Program = 
 
     [<EntryPoint>]
     let main _ =
-        [   {Suit = Spade; Rank = Ace}; 
-            {Suit = Heart; Rank = Ace};
-            {Suit = Diamond; Rank = Ace};
-            {Suit = Club; Rank = Ace};
-        ]
-        |> List.iter renderCard
+        let test = getNewGame ()
         0

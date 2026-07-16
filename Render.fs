@@ -1,6 +1,7 @@
 namespace TermCell
 
 open System
+open GameTypes
 
 module Render = 
 // ♠♣♥♦
@@ -15,7 +16,6 @@ module Render =
     let private rankToSymbol = 
         function
         | Ace ->    "A  "
-        | One ->    "1  "
         | Two ->    "2  "        
         | Three ->  "3  "
         | Four ->   "4  "

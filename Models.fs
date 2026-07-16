@@ -9,7 +9,6 @@ module Models =
     
     type Rank = 
         | Ace 
-        | One 
         | Two 
         | Three 
         | Four 

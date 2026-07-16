@@ -50,3 +50,52 @@ module GameFunctions =
         | W i -> state.WorkingColumns[i] |> WorkingColumn
         | F i -> state.FreeCells[i] |> FreeCell
         | G i -> state.GoalColumns[i] |> GoalColumn
+
+    let private ranks = 
+        [|
+            Ace;
+            Two;
+            Three;
+            Four;
+            Five;
+            Six;
+            Seven;
+            Eight;
+            Nine;
+            Ten;
+            Jack;
+            Queen;
+            King;
+    |]
+
+    let private suits = [| Spade; Heart; Diamond; Club; |]
+    let private getNewDeck = 
+        ranks 
+        |> Array.allPairs suits 
+        |> Array.map (fun c -> { Suit = fst c ; Rank = snd c})
+
+    let private shuffleInPlace (deck : Card array) =
+        for i = 0 to deck.Length - 2 do
+            let j = System.Random.Shared.Next deck.Length
+            let temp = deck[i]
+            deck[i] <- deck[j]
+            deck[j] <- temp
+        deck
+
+    let private deckFolder (state : GameState, lastColumn: int) (card: Card) =
+        match lastColumn with
+        | i when i > 8 -> failwith "Too many columns" // TODO: Make this cleaner
+        | 8 -> 1
+        | i -> i+1
+        |> fun i -> { 
+            state with WorkingColumns = state.WorkingColumns.Add(i, { WorkingCards = card :: state.WorkingColumns[i].WorkingCards })}, i
+    let private deal deck =
+        deck 
+        |> Seq.ofArray 
+        |> Seq.fold deckFolder (GameState.Empty(), 0) 
+        |> fst
+
+    let getNewGame () =
+        getNewDeck
+        |> shuffleInPlace
+        |> deal
